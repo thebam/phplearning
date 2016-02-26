@@ -7,7 +7,7 @@ $age = 36;
 $alive = 'true';
 
 //returns 1 if true and nothing if false
-// echo is_string($name);
+echo is_string($name);
 // echo is_string($age);
 // 
 // echo $age;
