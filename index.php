@@ -1,5 +1,6 @@
 <?php
 //comments
+require "Person.php";
 
 define('GENDER', 'male');
 $name = 'jason';
@@ -76,4 +77,21 @@ function setGlobal(){
     $alive = 'false';
 }
 
+
+
+class Author extends Person
+{
+    public $penName = "Special D";
+    
+    public function getPenName(){
+        return $this->penName;
+        
+    }
+}
+
+$myObject = new Author('Jason','Saunders',1979);
+$myObject->setFirstName('Jay');
+echo $myObject->getFirstName();
+echo $myObject->getPenName();
+echo $myObject::AVGLIFESPAN;
 ?>
