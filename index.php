@@ -59,7 +59,16 @@ foreach($members as $key => $member){
     echo($member); 
 }
 
+	if(1==1){
+		$output = 'yes';
+	}else{
+		$output = 'no';
+	}
+	$output = (1==1) ? 'yes' : 'no';
 
+	for($i=0;$i<5;$i++){
+		echo "test";
+	}
 
 
 function doSomething($myName, $myAge){
