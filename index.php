@@ -1,106 +1,17 @@
 <?php
-//comments
-require "Person.php";
 
-define('GENDER', 'male');
-$name = 'jason';
-$age = 36;
-$alive = 'true';
-
-//returns 1 if true and nothing if false
-echo is_string($name);
-// echo is_string($age);
-// 
-// echo $age;
-echo GENDER;
-$strAge = (string)$age;
-echo $strAge;
-
-doSomething($name,returnSomething());
-doSomething($name,returnSomething($age));
-
-echo $alive;
-setGlobal();
-echo $alive;
-
-$uppercase = 'this began lowercase';
-$lowercase = 'THIS BEGAN UPPERCASE';
-
-$uppercase = strtoupper($uppercase);
-$lowercase = strtolower($lowercase);
-
-echo $uppercase;
-echo $lowercase;
-
-$authors = array('Jason','La Shan', 'Elana');
-array_push($authors, 'Janet');
-//this is preferred because it will create an array if it doesn't exists
-$authors[] = 'Janet';
-sort($authors);
-
-print_r($authors);
-foreach($authors as $author){
-    echo($author);
-}
-
-
-$members = array('dad'=>'Jason', 'mom'=>'La Shan','baby'=>'Elana'); 
-if (array_key_exists('dad',$members)){ 
-    echo $members['dad'];
-}
-asort($members);
-print_r($members);
-
-ksort($members);
-print_r($members);
-
-foreach($members as $key => $member){ 
-    echo($key); 
-    echo($member); 
-}
-
-	if(1==1){
-		$output = 'yes';
-	}else{
-		$output = 'no';
-	}
-	$output = (1==1) ? 'yes' : 'no';
-
-	for($i=0;$i<5;$i++){
-		echo "test";
-	}
-
-
-function doSomething($myName, $myAge){
-    echo "$myName will be ". $myAge ." in 5 years.";
-    echo "\n";
-}
-
-function returnSomething($myAge=5){
-    
-    return ($myAge + 5);
-}
-
-function setGlobal(){
-    global $alive;
-    $alive = 'false';
-}
-
-
-
-class Author extends Person
-{
-    public $penName = "Special D";
-    
-    public function getPenName(){
-        return $this->penName;
-        
-    }
-}
-
-$myObject = new Author('Jason','Saunders',1979);
-$myObject->setFirstName('Jay');
-echo $myObject->getFirstName();
-echo $myObject->getPenName();
-echo $myObject::AVGLIFESPAN;
+/*
+CREATE DATABASE recipes;
+CREATE TABLE Recipe (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,title VARCHAR(256) NOT NULL, mainIngredient VARCHAR(256), url VARCHAR(256),dateModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+*/
 ?>
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <h1>Meals Cooked</h1>
+        <a href="addMeal.php">Add meal</a>
+        <ul>
+            <li><a href="https://www.blueapron.com/recipes/one-pot-shrimp-perloo" target="_blank">One-Pot Shrimp Perloo</a></li>
+        </ul>
+    </body>
+</html>
