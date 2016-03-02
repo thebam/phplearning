@@ -1,4 +1,5 @@
 <?php
+require_once "recipeConnection.php";
 class Recipe
 {
     private $id;
@@ -6,18 +7,33 @@ class Recipe
     private $mainIngredient;
     private $url;
     private $dateModified;
+    private $connection;
+    private $recipes;
+    
     
     public function addRecipe($tempTitle, $tempMainIngredient,$tempUrl){
-        $connection = openConnection();
+        $this->connection = openConnection();
         
-        $query = 'INSERT INTO recipes (title, mainIngredient,url) VALUES (?,?,?)';
-        $recipes = $connection->prepare($query);
+        $query = 'INSERT INTO recipe (title, mainIngredient,url) VALUES (?,?,?)';
+        $recipes = $this->connection->prepare($query);
         $recipes->bind_param('sss',$tempTitle, $tempMainIngredient,$tempUrl);
         $recipes->execute();
         //echo "new id is ".$connection->insert_id;
-        
-        $recipes.close();
-        $connection.close();
+        // 
+        $recipes->close();
+        $this->connection->close();
+    }
+    
+    public function allRecipes(){
+        $this->connection = openConnection();
+        $query = 'SELECT * FROM recipe ORDER BY title';
+        $this->recipes = $this->connection->query($query);
+        return ($this->recipes);
+    }
+    
+    public function closeRecipes(){
+         $this->recipes->close();
+          $this->connection->close();
     }
 }
 ?>

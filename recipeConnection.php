@@ -1,12 +1,16 @@
 <?php
-$dbPassword='pass';
-$dbUser='testUser';
+$dbPassword='cooking';
+$dbUser='chef';
 $dbServer='localhost';
 $dbName='recipes';
 $connection;
 
 function openConnection()
 {
+    global $dbPassword;
+global $dbUser;
+global $dbServer;
+global $dbName;
    global $connection;
    $connection = new mysqli($dbServer,$dbUser, $dbPassword, $dbName);
    if($connection->connect_errno){

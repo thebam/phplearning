@@ -1,5 +1,5 @@
 <?php
-
+require_once "recipe.php";
 /*
 CREATE DATABASE recipes;
 CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';
@@ -9,8 +9,9 @@ CREATE TABLE Recipe (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,title VARCHAR(25
 */
 
 if(count($_POST)>0){
-
-
+$myRecipe = new recipe();
+$myRecipe->addRecipe($_POST['title'],$_POST['mainIngredient'],$_POST['url']);
+header('Location: index.php');
 
 }
 
