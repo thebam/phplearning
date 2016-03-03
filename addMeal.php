@@ -12,8 +12,14 @@ if(count($_POST)>0){
 $myRecipe = new recipe();
 $myRecipe->addRecipe($_POST['title'],$_POST['mainIngredient'],$_POST['url']);
 header('Location: index.php');
-
-}
+//  if($this->connection->insert_id > 0){
+//                 $this->connection->close();
+//                 header('Location index.php');   
+//             }else{
+//                 $this->connection->close();
+//                 header('Location error.php');
+//             }
+// }
 
 ?>
 <!DOCTYPE html>

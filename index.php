@@ -19,7 +19,7 @@ $recipes = $myRecipe->allRecipes();
                 if($recipes->num_rows>0){
                     while($recipe = $recipes->fetch_assoc()){
                         ?>
-                        <li><a href="<?=$recipe['url']?>" target="_blank"><?=$recipe['title']?></a></li>
+                        <li><a href="<?=$recipe['url']?>" target="_blank"><?=$recipe['title']?></a> - <a href="editMeal.php?name=<?=$recipe['title']?>">edit</a> - <a href="<?=$recipe['url']?>">delete</a></li>
                         <?php
                     }
                 }

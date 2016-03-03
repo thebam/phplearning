@@ -9,7 +9,21 @@ class Recipe
     private $dateModified;
     private $connection;
     private $recipes;
-    
+    public function getId(){
+        return $this->id;
+    }
+    public function getTitle(){
+        return $this->title;
+    }
+    public function getMainIngredient(){
+        return $this->mainIngredient;
+    }
+    public function getUrl(){
+        return $this->url;
+    }
+    public function getDateModified(){
+        return $this->dateModified;
+    }
     public function addRecipe($tempTitle, $tempMainIngredient,$tempUrl){
         if($tempTitle!==NULL &&  $tempMainIngredient !== NULL && $tempUrl !== NULL)
         {
@@ -19,14 +33,18 @@ class Recipe
             $recipes->bind_param('sss',$tempTitle, $tempMainIngredient,$tempUrl);
             $recipes->execute(); 
             $recipes->close();
-            
-            if($this->connection->insert_id > 0){
-                $this->connection->close();
-                header('Location index.php');   
-            }else{
-                $this->connection->close();
-                header('Location error.php');
-            }
+        }
+    }
+    
+    public function editRecipe($id,$tempTitle, $tempMainIngredient,$tempUrl){
+        if($id!==NULL &&$tempTitle!==NULL &&  $tempMainIngredient !== NULL && $tempUrl !== NULL)
+        {
+            $this->connection = openConnection();
+            $query = 'UPDATE recipe SET title=?, mainIngredient=?, url=? WHERE id=?';
+            $recipes = $this->connection->prepare($query);
+            $recipes->bind_param('sssi',$tempTitle, $tempMainIngredient,$tempUrl,$id);
+            $recipes->execute(); 
+            $recipes->close();
         }
     }
     
@@ -46,20 +64,23 @@ class Recipe
     
     public function getRecipeByName($recipeName){
         $connection = openConnection();
-        $query = 'SELECT TOP 1 * FROM recipe WHERE title = ?';
-        $receipe = $connection->query($query);
+        $query = 'SELECT * FROM recipe WHERE title = ?';
+        $recipe = $connection->prepare($query);
+        $recipe->bind_param('s',$recipeName);
+        $recipe->execute();
+        $recipe->bind_result($id,$title,$mainIngredient,$url,$dateCreated);
+        $recipe->store_result();
         if ($recipe->num_rows>0) {
-            while($meal = $recipe->fetch_assoc()){
-                $this->id = $meal['id'];
-$this->title = $meal['title'];
-$this->mainIngredient = $meal['mainIngredient'];
-$this->url = $meal['url'];
-$this->dateModified = $meal['dateModified'];
+            while($recipe->fetch()){
+                $this->id = $id;
+$this->title = $title;
+$this->mainIngredient = $mainIngredient;
+$this->url = $url;
+$this->dateModified = $dateModified;
             }
         }
         $recipe->close();
         $connection->close();
-        return $this;
     }
 }
 ?>
