@@ -24,14 +24,14 @@ class Recipe
     public function getDateModified(){
         return $this->dateModified;
     }
-    public static function addRecipe($tempTitle, $tempMainIngredient,$tempUrl){
+    public static function addRecipe($tempTitle, $tempMainIngredientId,$tempCuisineId,$tempUrl,$tempRating){
         $output="";
-        if($tempTitle!==NULL &&  $tempMainIngredient !== NULL && $tempUrl !== NULL)
+        if($tempTitle!==NULL &&  $tempMainIngredientId !== NULL && $tempCuisineId !== NULL && $tempUrl !== NULL&& $tempRating !== NULL)
         {
             $connection = openConnection();
-            $query = 'INSERT INTO recipe (title, mainIngredient,url) VALUES (?,?,?)';
+            $query = 'INSERT INTO recipes (Title, MainIngredientId,CuisineId,Url,Rating) VALUES (?,?,?,?,?)';
             $recipes = $connection->prepare($query);
-            $recipes->bind_param('sss',$tempTitle, $tempMainIngredient,$tempUrl);
+            $recipes->bind_param('siisi',$tempTitle, intval($tempMainIngredientId),intval($tempCuisineId),$tempUrl,intval($tempRating));
             $recipes->execute();
             if($connection->insert_id){
                 $output ="success";
@@ -47,7 +47,7 @@ class Recipe
         if($id!==NULL)
         {
             $connection = openConnection();
-            $query = "DELETE FROM recipe WHERE id = ?";
+            $query = "DELETE FROM recipes WHERE Id = ?";
             $recipe = $connection->prepare($query);
             $recipe->bind_param('i',$id);
             $recipe->execute();
@@ -71,7 +71,7 @@ class Recipe
     public static function allRecipes(){
         $connection = openConnection();
         $recipes=array();
-        $query = 'SELECT * FROM recipe ORDER BY title';
+        $query = 'SELECT * FROM recipes ORDER BY Title';
         $results = $connection->query($query);
         while ($row = $results->fetch_assoc()) {
             $recipes[]=$row;
