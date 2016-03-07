@@ -24,15 +24,35 @@ class Recipe
     public function getDateModified(){
         return $this->dateModified;
     }
-    public function addRecipe($tempTitle, $tempMainIngredient,$tempUrl){
+    public static function addRecipe($tempTitle, $tempMainIngredient,$tempUrl){
+        $output="";
         if($tempTitle!==NULL &&  $tempMainIngredient !== NULL && $tempUrl !== NULL)
         {
-            $this->connection = openConnection();
+            $connection = openConnection();
             $query = 'INSERT INTO recipe (title, mainIngredient,url) VALUES (?,?,?)';
-            $recipes = $this->connection->prepare($query);
+            $recipes = $connection->prepare($query);
             $recipes->bind_param('sss',$tempTitle, $tempMainIngredient,$tempUrl);
-            $recipes->execute(); 
+            $recipes->execute();
+            if($connection->insert_id){
+                $output ="success";
+            }else{
+                $output ="failed";
+            }
             $recipes->close();
+            $connection->close();
+        }
+        return $output;
+    }
+    public static function deleteRecipe($id){
+        if($id!==NULL)
+        {
+            $connection = openConnection();
+            $query = "DELETE FROM recipe WHERE id = ?";
+            $recipe = $connection->prepare($query);
+            $recipe->bind_param('i',$id);
+            $recipe->execute();
+            $recipe->close();
+            $connection->close();
         }
     }
     
@@ -48,17 +68,18 @@ class Recipe
         }
     }
     
-    public function allRecipes(){
-        $this->connection = openConnection();
+    public static function allRecipes(){
+        $connection = openConnection();
+        $recipes=array();
         $query = 'SELECT * FROM recipe ORDER BY title';
-        $this->recipes = $this->connection->query($query);
-        return ($this->recipes);
+        $results = $connection->query($query);
+        while ($row = $results->fetch_assoc()) {
+            $recipes[]=$row;
+        }
+        $connection->close();
+        return ($recipes);
     }
     
-    public function closeRecipes(){
-         $this->recipes->close();
-          $this->connection->close();
-    }
     
     public function getRecipeById(){}
     

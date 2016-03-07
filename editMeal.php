@@ -7,7 +7,7 @@ if(count($_POST)>0){
 }else{
     if(count($_GET)>0){
         $myRecipe = new recipe();
-        $myRecipe->getRecipeByName($_GET['name']);
+        $myRecipe->getRecipeByName(urldecode($_GET['name']));
     }
 }
 

@@ -1,13 +1,6 @@
 <?php
 require_once 'recipe.php';
-/*
-CREATE DATABASE recipes;
-CREATE TABLE Recipe (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,title VARCHAR(256) NOT NULL, mainIngredient VARCHAR(256), url VARCHAR(256),dateModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
-*/
-
-$myRecipe = new recipe();
-$recipes = $myRecipe->allRecipes();
-
+$recipes = Recipe::allRecipes();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,17 +9,14 @@ $recipes = $myRecipe->allRecipes();
         <a href="addMeal.php">Add meal</a>
         <ul>
             <?php
-                if($recipes->num_rows>0){
-                    while($recipe = $recipes->fetch_assoc()){
+                
+                    foreach($recipes as $recipe){
                         ?>
-                        <li><a href="<?=$recipe['url']?>" target="_blank"><?=$recipe['title']?></a> - <a href="editMeal.php?name=<?=$recipe['title']?>">edit</a> - <a href="<?=$recipe['url']?>">delete</a></li>
+                        <li><a href="<?=$recipe['url']?>" target="_blank"><?=$recipe['title']?></a> - <a href="editMeal.php?name=<?=urlencode($recipe['title'])?>">edit</a> - <a href="deleteMeal.php?id=<?=$recipe['id']?>">delete</a></li>
                         <?php
                     }
-                }
+                
             ?>
         </ul>
     </body>
 </html>
-<?php
-$myRecipes->closeRecipes();
-?>
