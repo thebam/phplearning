@@ -2,7 +2,7 @@
 require_once "recipe.php";
 $error = '';
 if(count($_POST)>0){
-    $result = Recipe::addRecipe($_POST['title'],$_POST['mainIngredient'],$_POST['cuisine'],$_POST['url'],$_POST['rating']);
+    $result = Recipe::addRecipe($_POST['title'],$_POST['mainIngredient'],$_POST['cuisine'],$_POST['url'],$_POST['rating'],$_POST['notes']);
     if($result==='success'){
         header('Location: index.php');
     }else{
@@ -60,6 +60,7 @@ if(count($_POST)>0){
                 <option>4</option>
                 <option>5</option>
                 </select>
+                <textarea name="notes"></textarea>
             <input type="submit" />
         </form>
     </body>

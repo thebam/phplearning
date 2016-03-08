@@ -12,7 +12,7 @@ $recipes = Recipe::allRecipes();
                 
                     foreach($recipes as $recipe){
                         ?>
-                        <li><a href="<?=$recipe['url']?>" target="_blank"><?=$recipe['Title']?></a> <?=$recipe['Rating']?> out of 5 <a href="editMeal.php?name=<?=urlencode($recipe['Title'])?>">edit</a> - <a href="deleteMeal.php?id=<?=$recipe['Id']?>">delete</a></li>
+                        <li><a href="<?=$recipe['Url']?>" target="_blank"><?=$recipe['Title']?></a> <?=$recipe['Rating']?> out of 5 <a href="editMeal.php?name=<?=urlencode($recipe['Title'])?>">edit</a> - <a href="deleteMeal.php?id=<?=$recipe['Id']?>">delete</a></li>
                         <?php
                     }
                 

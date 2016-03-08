@@ -4,8 +4,11 @@ class Recipe
 {
     private $id;
     private $title;
-    private $mainIngredient;
+    private $mainIngredientId;
+    private $cuisineId;
     private $url;
+    private $rating;
+    private $notes;
     private $dateModified;
     private $connection;
     private $recipes;
@@ -15,23 +18,32 @@ class Recipe
     public function getTitle(){
         return $this->title;
     }
-    public function getMainIngredient(){
-        return $this->mainIngredient;
+    public function getMainIngredientId(){
+        return $this->mainIngredientId;
+    }
+    public function getCuisineId(){
+        return $this->cuisineId;
+    }
+    public function getRating(){
+        return $this->rating;
     }
     public function getUrl(){
         return $this->url;
     }
+    public function getNotes(){
+        return $this->notes;
+    }
     public function getDateModified(){
         return $this->dateModified;
     }
-    public static function addRecipe($tempTitle, $tempMainIngredientId,$tempCuisineId,$tempUrl,$tempRating){
+    public static function addRecipe($tempTitle, $tempMainIngredientId,$tempCuisineId,$tempUrl,$tempRating,$tempNotes){
         $output="";
         if($tempTitle!==NULL &&  $tempMainIngredientId !== NULL && $tempCuisineId !== NULL && $tempUrl !== NULL&& $tempRating !== NULL)
         {
             $connection = openConnection();
-            $query = 'INSERT INTO recipes (Title, MainIngredientId,CuisineId,Url,Rating) VALUES (?,?,?,?,?)';
+            $query = 'INSERT INTO recipes (Title, MainIngredientId,CuisineId,Url,Rating,Notes) VALUES (?,?,?,?,?,?)';
             $recipes = $connection->prepare($query);
-            $recipes->bind_param('siisi',$tempTitle, intval($tempMainIngredientId),intval($tempCuisineId),$tempUrl,intval($tempRating));
+            $recipes->bind_param('siisis',$tempTitle, intval($tempMainIngredientId),intval($tempCuisineId),$tempUrl,intval($tempRating),$tempNotes);
             $recipes->execute();
             if($connection->insert_id){
                 $output ="success";
@@ -56,15 +68,16 @@ class Recipe
         }
     }
     
-    public function editRecipe($id,$tempTitle, $tempMainIngredient,$tempUrl){
-        if($id!==NULL &&$tempTitle!==NULL &&  $tempMainIngredient !== NULL && $tempUrl !== NULL)
+    public static function editRecipe($id,$tempTitle, $tempMainIngredientId,$tempUrl,$tempCuisineId,$tempRating,$tempNotes){
+        if($id!==NULL &&$tempTitle!==NULL &&  $tempMainIngredientId !== NULL && $tempUrl !== NULL)
         {
-            $this->connection = openConnection();
-            $query = 'UPDATE recipe SET title=?, mainIngredient=?, url=? WHERE id=?';
-            $recipes = $this->connection->prepare($query);
-            $recipes->bind_param('sssi',$tempTitle, $tempMainIngredient,$tempUrl,$id);
+            $connection = openConnection();
+            $query = 'UPDATE recipes SET Title=?, MainIngredientId=?,CuisineId=?, Url=?, Rating=?, Notes=? WHERE id=?';
+            $recipes = $connection->prepare($query);
+            $recipes->bind_param('siisisi',$tempTitle, intval($tempMainIngredientId),intval($tempCuisineId),$tempUrl,intval($tempRating),$tempNotes,intval($id));
             $recipes->execute(); 
             $recipes->close();
+            $connection->close();
         }
     }
     
@@ -85,19 +98,22 @@ class Recipe
     
     public function getRecipeByName($recipeName){
         $connection = openConnection();
-        $query = 'SELECT * FROM recipe WHERE title = ?';
+        $query = 'SELECT * FROM recipes WHERE title = ?';
         $recipe = $connection->prepare($query);
         $recipe->bind_param('s',$recipeName);
         $recipe->execute();
-        $recipe->bind_result($id,$title,$mainIngredient,$url,$dateCreated);
+        $recipe->bind_result($id,$title,$mainIngredientId,$cuisineId,$url,$rating,$notes,$dateCreated);
         $recipe->store_result();
         if ($recipe->num_rows>0) {
             while($recipe->fetch()){
                 $this->id = $id;
-$this->title = $title;
-$this->mainIngredient = $mainIngredient;
-$this->url = $url;
-$this->dateModified = $dateModified;
+                $this->title = $title;
+                $this->mainIngredientId = $mainIngredientId;
+                $this->cuisineId = $cuisineId;
+                $this->rating = $rating;
+                $this->notes = $notes;
+                $this->url = $url;
+                $this->dateModified = $dateModified;
             }
         }
         $recipe->close();
