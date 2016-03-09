@@ -1,49 +1,27 @@
 <?php
+namespace Cooking;
 require_once "recipeConnection.php";
 class Recipe
 {
-    private $id;
-    private $title;
-    private $mainIngredientId;
-    private $cuisineId;
-    private $url;
-    private $rating;
-    private $notes;
-    private $dateModified;
-    private $connection;
-    private $recipes;
-    public function getId(){
-        return $this->id;
-    }
-    public function getTitle(){
-        return $this->title;
-    }
-    public function getMainIngredientId(){
-        return $this->mainIngredientId;
-    }
-    public function getCuisineId(){
-        return $this->cuisineId;
-    }
-    public function getRating(){
-        return $this->rating;
-    }
-    public function getUrl(){
-        return $this->url;
-    }
-    public function getNotes(){
-        return $this->notes;
-    }
-    public function getDateModified(){
-        return $this->dateModified;
-    }
-    public static function addRecipe($tempTitle, $tempMainIngredientId,$tempCuisineId,$tempUrl,$tempRating,$tempNotes){
+    public $id;
+    public $title;
+    public $mainIngredientId;
+    public $cuisineId;
+    public $url;
+    public $rating;
+    public $notes;
+    public $dateModified;
+
+    public static function addRecipe($tempTitle, $tempMainIngredientId,$tempCuisineId,$tempUrl,$tempTaste,$tempNotes,$tempImage,$tempVideo,$tempPrep,$tempClean,$tempIngredients,$tempSteps){
         $output="";
-        if($tempTitle!==NULL &&  $tempMainIngredientId !== NULL && $tempCuisineId !== NULL && $tempUrl !== NULL&& $tempRating !== NULL)
+        if($tempTitle!==NULL &&  $tempMainIngredientId !== NULL && $tempCuisineId !== NULL && $tempUrl !== NULL&& $tempTaste !== NULL)
         {
             $connection = openConnection();
-            $query = 'INSERT INTO recipes (Title, MainIngredientId,CuisineId,Url,Rating,Notes) VALUES (?,?,?,?,?,?)';
+            $query = 'INSERT INTO recipes (Title, MainIngredientId,CuisineId,Url,TasteRating,Notes,ImageUrl,VideoUrl,PrepRating,CleanRating) VALUES (?,?,?,?,?,?,?,?,?,?)';
             $recipes = $connection->prepare($query);
-            $recipes->bind_param('siisis',$tempTitle, intval($tempMainIngredientId),intval($tempCuisineId),$tempUrl,intval($tempRating),$tempNotes);
+            $recipes->bind_param('siisisssii',$tempTitle, intval($tempMainIngredientId),intval($tempCuisineId),$tempUrl,intval($tempTaste),$tempNotes,$tempImage,$tempVideo,intval($tempPrep),intval($tempClean));
+            
+            //TODO add $query->erroe_list
             $recipes->execute();
             if($connection->insert_id){
                 $output ="success";
@@ -113,7 +91,7 @@ class Recipe
                 $this->rating = $rating;
                 $this->notes = $notes;
                 $this->url = $url;
-                $this->dateModified = $dateModified;
+                $this->dateModified = $dateCreated;
             }
         }
         $recipe->close();
