@@ -4,7 +4,7 @@ ini_set('display_errors', '1');
 require_once "recipe.php";
 $error = '';
 if(count($_POST)>0){
-     $result = Cooking\Recipe::addRecipe($_POST['title'],$_POST['mainIngredient'],$_POST['cuisine'],$_POST['url'],$_POST['tasteRating'],$_POST['notes'],$_POST['imageUrl'],$_POST['videoUrl'],$_POST['preparationRating'],$_POST['cleanUpRating'],$_POST['ingredients'],$_POST['instructions']);
+     $result = Cooking\Recipe::addRecipe($_POST['title'],$_POST['mainIngredient'],$_POST['cuisine'],$_POST['url'],$_POST['tasteRating'],$_POST['notes'],$_POST['imageUrl'],$_POST['videoUrl'],$_POST['preparationRating'],$_POST['cleanUpRating'],$_POST['ingredients'],$_POST['quantities'],$_POST['instructions'],$_POST['servings']);
      if($result==='success'){
          header('Location: index.php');
      }else{
@@ -57,6 +57,26 @@ if(count($_POST)>0){
             ?>    
             </select>
             </div>
+            
+            <div class="form-group">
+                <label for="servings">Taste Rating:</label>
+            <select name="servings" class="form-control">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+                </select>
+                </div>
+            
+            
             <div class="form-group">
                 <label for="mainIngredient">Main Ingredient:</label>
                 <select name="mainIngredient" class="form-control">
