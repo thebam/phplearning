@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+    crossorigin="anonymous">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        
+        
+        
+        .recipes {
+            background-color: #fff;
+        }
+        
+        .recipes .row{
+            background-color: #fff;
+            
+        }
+        
+        .recipes .row .recipeImage {
+           padding-left: 0;
+           padding-right: 0;
+           
+        }
+        
+        .recipes .row .recipeImage img {
+            width: 100%;
+        }
+        
+        .recipes .row .recipeDetails {
+            background-color: #fff;
+            color: #000;
+        }
+        
+        .recipes .rowBackwards{
+            display: table;
+            width: 100%;
+        }
+        .recipes .rowBackwards .recipeImage{
+            display: table-header-group;
+        }
+        .recipes .rowBackwards .recipeDetails{
+            display: table-footer-group;
+        }
+        
+        @media screen and (min-width:768px){
+        .recipes .rowBackwards{
+            display: inline;
+        }
+        .recipes .rowBackwards .recipeImage{
+            display: inline;
+        }
+        .recipes .rowBackwards .recipeDetails{
+            display: inline;
+        }
+        }
+        
+    </style>
+</head>
+
+<body>
+    <header>
+        Paper Plate Dad
+        <ul>
+            <li>About</li>
+            <li>Recipe</li>
+            <li>Contact</li>
+        </ul>
+        SEARCH
+    </header>
+    <div class="recipes container-fluid">
+        <div class="row">
+            <div class="col-md-3 recipeImage">
+                <img src="http://technext.github.io/restaurant-html-template/images/blog/blog-img-1.jpg" />
+            </div>
+            <div class="col-md-3 recipeDetails">
+                <h2>Something Soup</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <a class="btn btn-default">Details</a>
+            </div>
+
+            <div class="col-md-3 recipeImage">
+                <img src="http://technext.github.io/restaurant-html-template/images/blog/blog-img-2.jpg" />
+            </div>
+            <div class="col-md-3 recipeDetails">
+                <h2>What Waffles</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <a class="btn btn-default">Details</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="recipe rowBackwards">
+            <div class="col-md-3 recipeDetails">
+                <h2>Sup Steak</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <a class="btn btn-default">Details</a>
+            </div>
+            <div class="col-md-3 recipeImage">
+                <img src="http://technext.github.io/restaurant-html-template/images/blog/blog-img-3.jpg" />
+            </div>
+            </div>
+            <div class="recipe rowBackwards">
+            <div class="col-md-3 recipeDetails">
+                <h2>So Sausage</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <a class="btn btn-default">Details</a>
+            </div>
+            <div class="col-md-3 recipeImage">
+                <img src="http://technext.github.io/restaurant-html-template/images/blog/blog-img-4.jpg" />
+            </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
