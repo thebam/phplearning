@@ -58,24 +58,7 @@ if(count($_POST)>0){
             </select>
             </div>
             
-            <div class="form-group">
-                <label for="servings">Taste Rating:</label>
-            <select name="servings" class="form-control">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
-                </select>
-                </div>
-            
+           
             
             <div class="form-group">
                 <label for="mainIngredient">Main Ingredient:</label>
@@ -89,6 +72,29 @@ if(count($_POST)>0){
                     ?>    
                 </select>
             </div>
+            
+            <div class="form-group">
+                <label for="servings">Servings:</label>
+                
+                     <select name="servings" class="form-control">
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+                </select> 
+
+            </div>
+            
+            
             <label>All Ingredients:</label>
             <div id="ingredientsContainer" class="controls form-inline">
             <div class="ingredient controls form-inline">

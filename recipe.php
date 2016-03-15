@@ -86,14 +86,48 @@ class Recipe
         }
     }
     
-    public static function editRecipe($id,$tempTitle, $tempMainIngredientId,$tempUrl,$tempCuisineId,$tempRating,$tempNotes){
+    public static function editRecipe($id,$tempTitle, $tempMainIngredientId,$tempCuisineId,$tempUrl,$tempTaste,$tempNotes,$tempImage,$tempVideo,$tempPrep,$tempClean,$tempIngredients,$tempQuantities,$tempSteps,$tempServings){
         if($id!==NULL &&$tempTitle!==NULL &&  $tempMainIngredientId !== NULL && $tempUrl !== NULL)
         {
             $connection = openConnection();
-            $query = 'UPDATE recipes SET Title=?, MainIngredientId=?,CuisineId=?, Url=?, Rating=?, Notes=? WHERE id=?';
+            $query = 'UPDATE recipes SET Title=?, MainIngredientId=?,CuisineId=?, Url=?,TasteRating=?,Notes=?,ImageUrl=?,VideoUrl=?,PrepRating=?,CleanRating=?,Servings=? WHERE id=?';
             $recipes = $connection->prepare($query);
-            $recipes->bind_param('siisisi',$tempTitle, intval($tempMainIngredientId),intval($tempCuisineId),$tempUrl,intval($tempRating),$tempNotes,intval($id));
-            $recipes->execute(); 
+            $recipes->bind_param('siisisssiiii',$tempTitle, intval($tempMainIngredientId),intval($tempCuisineId),$tempUrl,intval($tempTaste),$tempNotes,$tempImage,$tempVideo,intval($tempPrep),intval($tempClean),intval($tempServings),intval($id));
+            $recipes->execute();
+            
+            $query = "DELETE FROM steps WHERE RecipeId = ?";
+            $recipe = $connection->prepare($query);
+            $recipe->bind_param('i',intval($id));
+            $recipe->execute();
+            
+            $query = "DELETE FROM recipeIngredients WHERE RecipeId = ?";
+            $recipe = $connection->prepare($query);
+            $recipe->bind_param('i',intval($id));
+            $recipe->execute();
+            
+            
+            if(count($tempIngredients) > 0){
+                    if(count($tempIngredients) == count($tempQuantities)){
+                        for ($x=0;$x<count($tempIngredients);$x++) {
+                            $query = 'INSERT INTO recipeIngredients (RecipeId, IngredientId,Quantity) VALUES (?,?,?)';
+                            $recipes = $connection->prepare($query);
+                            $recipes->bind_param('iis',$id, intval($tempIngredients[$x]),$tempQuantities[$x]);
+                            $recipes->execute();
+                        }
+                    }
+                }
+                if(count($tempSteps) > 0){
+                    for ($x=0;$x<count($tempSteps);$x++) {
+                        $query = 'INSERT INTO steps (RecipeId, Description ,DisplayOrder) VALUES (?,?,?)';
+                        $recipes = $connection->prepare($query);
+                        $recipes->bind_param('isi',$id,$tempSteps[$x],intval($x));
+                        $recipes->execute();
+                    }
+                }
+            
+            
+            
+            
             $recipes->close();
             $connection->close();
         }
